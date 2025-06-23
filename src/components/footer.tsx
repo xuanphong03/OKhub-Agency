@@ -59,7 +59,7 @@ const Footer = ({
   }, [footer])
 
   return (
-    <div className='relative z-50 bg-white'>
+    <div className='relative z-50 bg-white max-sm:pb-[4rem]'>
       <div
         className='pointer-events-none absolute bottom-full left-0 z-100 h-[1000px] w-full bg-gradient-to-b from-transparent to-[rgba(102,102,102,0.1)] opacity-0 backdrop-blur-[4.45px] transition-opacity duration-300'
         ref={overflowRef}
