@@ -3,9 +3,11 @@ import CustomBorderedButtonV1 from '@/components/bordered-button-v1'
 import {AppContext} from '@/provider/AppProvider'
 import {ILink} from '@/types/link.interace'
 import {IMedia} from '@/types/media.interface'
+import {useGSAP} from '@gsap/react'
+import gsap from 'gsap'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, {useContext} from 'react'
+import React, {useContext, useRef, useState} from 'react'
 
 interface MenuMobileProps {
   contactLink: ILink
@@ -29,7 +31,10 @@ export default function MenuMobile({
 }: MenuMobileProps) {
   const context = useContext(AppContext)
   if (!context) throw new Error('AppContext must be used within AppProvider')
-  const {setOpenMenuMobile} = context
+  const {openMenuMobile, setOpenMenuMobile} = context
+  const containerRef = useRef<HTMLDivElement>(null)
+  const menuMobileRef = useRef<HTMLDivElement>(null)
+  const [hasAnimated, setHasAnimated] = useState<boolean>(false)
 
   const handleClickLinkItem = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (event.currentTarget.target === '_self') {
@@ -37,8 +42,46 @@ export default function MenuMobile({
     }
   }
 
+  useGSAP(
+    () => {
+      if (openMenuMobile && !hasAnimated) {
+        const ctx = gsap.context(() => {
+          const items = gsap.utils.toArray<HTMLElement>('.fade-in-menu-item')
+          if (!items) return
+          const delays = [0.6, 0.75, 0.975, 0.975]
+
+          const tl = gsap.timeline()
+
+          items.forEach((item, index) => {
+            tl.from(
+              item,
+              {
+                opacity: 0,
+                y: 50,
+                duration: 0.75,
+                ease: 'power2.inOut',
+                delay: delays[index] ?? 0,
+              },
+              0,
+            ) // Tất cả bắt đầu từ mốc 0, dùng delay riêng
+          })
+        }, menuMobileRef)
+
+        setHasAnimated(true)
+        return () => ctx.revert()
+      }
+    },
+    {
+      scope: containerRef,
+      dependencies: [openMenuMobile, hasAnimated],
+    },
+  )
+
   return (
-    <div className='relative h-screen w-full'>
+    <div
+      ref={containerRef}
+      className='relative h-screen w-full'
+    >
       <div className='absolute top-0 left-0 z-0 h-full w-full'>
         <Image
           alt=''
@@ -48,8 +91,11 @@ export default function MenuMobile({
           className='h-auto w-full object-cover'
         />
       </div>
-      <div className='relative z-[1] flex h-full flex-col justify-between p-[5.0625rem_1.16875rem_4.0625rem]'>
-        <div className='w-full self-stretch'>
+      <div
+        ref={menuMobileRef}
+        className='relative z-[1] flex h-full flex-col justify-between p-[5.0625rem_1.16875rem_4.0625rem]'
+      >
+        <div className='fade-in-menu-item w-full self-stretch'>
           <p className='mb-[0.5625rem] text-[0.75rem] leading-[139%] text-[#C8C7C2]'>
             Theo dõi chúng tôi
           </p>
@@ -77,7 +123,7 @@ export default function MenuMobile({
           </div>
         </div>
 
-        <div className='w-full self-stretch'>
+        <nav className='fade-in-menu-item w-full self-stretch'>
           {menu &&
             Array.isArray(menu) &&
             menu.map((menuItem, index) => {
@@ -95,9 +141,9 @@ export default function MenuMobile({
                 </Link>
               )
             })}
-        </div>
+        </nav>
 
-        <div className='w-full self-stretch'>
+        <div className='fade-in-menu-item w-full self-stretch'>
           <p className='mb-[0.5rem] text-[0.75rem] leading-[139%] font-normal text-[#C8C7C2]'>
             Kết nối với chúng tôi ngay bây giờ
           </p>
@@ -120,7 +166,7 @@ export default function MenuMobile({
           )}
         </div>
 
-        <div className='w-full self-stretch py-[0.625rem]'>
+        <div className='fade-in-menu-item w-full self-stretch py-[0.625rem]'>
           <div className='relative flex w-full justify-between overflow-hidden rounded-[0.46875rem] border border-solid border-[#eee] p-[1.125rem_1.5rem_0.0625rem_1.25rem]'>
             <Image
               alt=''
