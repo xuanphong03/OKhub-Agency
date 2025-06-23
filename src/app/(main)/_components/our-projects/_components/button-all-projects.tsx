@@ -56,7 +56,7 @@ const ButtonAllProjects: React.FC<ButtonAllProjectsProps> = ({
         style={{border: `1px solid ${borderColor}`}}
       >
         {/* Text Content */}
-        <div className='xsm:whitespace-nowrap relative z-10 flex h-[2.625rem] w-full items-center justify-center px-[2.3125rem] text-[0.75rem] font-normal text-black transition-colors delay-100 duration-300 group-hover:text-white max-sm:px-[1.48525rem]'>
+        <div className='xsm:whitespace-nowrap relative z-10 flex h-[2.625rem] w-full items-center justify-center px-[2.3125rem] text-[0.75rem] font-normal text-black uppercase transition-colors delay-100 duration-300 group-hover:text-white max-sm:px-[1.48525rem]'>
           {children}
         </div>
 
