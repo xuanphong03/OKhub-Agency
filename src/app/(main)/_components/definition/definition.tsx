@@ -1,11 +1,9 @@
 import DefinitionMarquee from '@/app/(main)/_components/definition/components/definition-marquee'
-import type {Definition} from '@/types/definition.interface'
 import DefinitionArticle from './components/definition-article'
 import DefinitionBackground from './components/definition-background'
-// import DefinitionCard from './components/definition-card'
-import DefinitionClient from './components/definition-client'
 import DefinitionCompany from './components/definition-company'
-import DefinitionCardV2 from '@/app/(main)/_components/definition/components/definition-card-v2'
+import DefinitionCard from '@/app/(main)/_components/definition/components/definition-card'
+import type {Definition} from '@/types/definition.interface'
 
 const Definition = ({definition}: {definition: Definition}) => {
   const {
@@ -17,7 +15,6 @@ const Definition = ({definition}: {definition: Definition}) => {
   } = definition
   return (
     <>
-      <DefinitionClient />
       <DefinitionMarquee definition_partner={definition_partner} />
 
       <section className='xsm:h-auto relative mt-[1rem] h-[50.625rem] overflow-hidden'>
@@ -31,11 +28,11 @@ const Definition = ({definition}: {definition: Definition}) => {
         <div className='xsm:flex-col-reverse xsm:py-[0.625rem] relative z-50 mx-auto flex w-[92.39375rem] max-w-full items-start justify-between'>
           <div className='xsm:px-[0.625rem] xsm:mt-[1.125rem] xsm:pb-[5.95rem] mt-[4.275rem] grid grid-cols-2 gap-[0.75rem]'>
             {definition_tag?.map((item, index) => (
-              <DefinitionCardV2
+              <DefinitionCard
                 key={index}
-                title={item.title}
-                value={item.value}
-                unit={item.unit}
+                title={item?.title ?? ''}
+                value={item?.value ?? ''}
+                unit={item?.unit ?? ''}
                 className='h-[11.151rem] w-[16.8125rem] shrink-0 max-sm:h-[7.144rem] max-sm:w-[10.79625rem]'
               />
             ))}

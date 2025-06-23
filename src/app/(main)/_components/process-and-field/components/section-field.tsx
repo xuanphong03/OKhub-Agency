@@ -7,7 +7,6 @@ import Image from 'next/image'
 import {useEffect, useRef} from 'react'
 
 export default function SectionField({commitment}: {commitment: Commitment}) {
-  console.log(commitment)
   const isMobile = useIsMobile()
   const speeds = [1.5, 1, 2.75, 1, 2.5, 1.5, 1, 2.5, 1.5, 1.5, 1, 2.25]
   const count = speeds.length
@@ -16,6 +15,7 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
   const fieldOfActivityTitleRef = useRef<HTMLDivElement>(null)
   const fieldOfActivityListImageRef = useRef<HTMLDivElement>(null)
   const badge__labelTextRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (window.innerWidth < 639) {
       gsap.to(fieldOfActivityRef.current, {
@@ -111,6 +111,7 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
       }
     }
   }, [])
+
   return (
     <div
       ref={pinSectionRef}
