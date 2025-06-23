@@ -56,12 +56,7 @@ export default function OurProjects({projects}: OurProjectsProps) {
               const isProject5 = index + 1 === 5
               const isProject6 = index + 1 === 6
               const isBigCard = index === 2 || index === 3
-              let imageWidth = 345.5
-              let imageHeight = 339.14
-              if (!isMobile && isBigCard) {
-                imageWidth = 697
-                imageHeight = 554
-              }
+
               return (
                 <Link
                   href={project?.link ?? '/'}
@@ -98,12 +93,24 @@ export default function OurProjects({projects}: OurProjectsProps) {
                       },
                     )}
                   >
-                    {project?.image_pc?.url && (
+                    {isMobile && project?.image_mb?.url && (
                       <Image
-                        alt=''
-                        src={project.image_pc.url}
-                        width={imageWidth}
-                        height={imageHeight}
+                        alt={project?.image_mb?.alt ?? ''}
+                        src={project?.image_mb?.url ?? ''}
+                        width={345.5}
+                        height={339.14}
+                        className={cn('h-full w-full object-cover', {
+                          'transition-all duration-500 ease-in-out sm:h-[34.625rem] lg:group-hover:scale-105':
+                            isBigCard,
+                        })}
+                      />
+                    )}
+                    {!isMobile && project?.image_pc?.url && (
+                      <Image
+                        alt={project?.image_pc?.alt}
+                        src={project?.image_pc?.url}
+                        width={isBigCard ? 697 : 345.5}
+                        height={isBigCard ? 554 : 339.14}
                         className={cn('h-full w-full object-cover', {
                           'transition-all duration-500 ease-in-out sm:h-[34.625rem] lg:group-hover:scale-105':
                             isBigCard,
