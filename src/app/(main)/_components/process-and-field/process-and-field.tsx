@@ -1,9 +1,11 @@
 'use client'
 
+import OurProjects from '@/app/(main)/_components/our-projects/our-projects'
 import SectionField from '@/app/(main)/_components/process-and-field/components/section-field'
 import {WorkflowItem} from '@/app/(main)/_components/process-and-field/components/workflow-item'
 import {WorkflowLastItem} from '@/app/(main)/_components/process-and-field/components/workflow-last-item'
 import {CustomBadge} from '@/components/custom-badge'
+import {IOurProjects} from '@/types/projects.interface'
 import {Commitment, Workflow} from '@/types/workflow.interface'
 import {gsap} from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
@@ -13,9 +15,11 @@ import {useEffect, useRef} from 'react'
 const ProcessAndField = ({
   workflow,
   commitment,
+  projects,
 }: {
   workflow: Workflow
   commitment: Commitment
+  projects: IOurProjects
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -281,7 +285,7 @@ const ProcessAndField = ({
             <WorkflowLastItem workflow={workflow} />
           </div>
         </section>
-
+        <OurProjects projects={projects} />
         <SectionField commitment={commitment} />
       </div>
       <div className='relative z-50 -mb-2 h-[15.6875rem] w-full border-none bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,#fff_100%)] sm:hidden'></div>

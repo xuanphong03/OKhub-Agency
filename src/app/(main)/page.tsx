@@ -7,7 +7,7 @@ import ValueToCustomer from '@/app/(main)/_components/value-to-customer/value-to
 import fetchData from '@/fetches/fetchData'
 
 export default async function Page() {
-  const [data, categoriesData, filteredPosts] = await Promise.all([
+  const [data, categoriesData, filteredPosts, projectsRes] = await Promise.all([
     fetchData({
       api: `/v2/pages/11?_fields=acf&acf_format=standard#`,
       option: {
@@ -26,6 +26,13 @@ export default async function Page() {
         next: {revalidate: 10},
       },
     }),
+    fetchData({
+      api: `/api/v1/home-projects`,
+      method: 'GET',
+      option: {
+        next: {revalidate: 10},
+      },
+    }),
   ])
   console.log(data)
   return (
@@ -36,6 +43,7 @@ export default async function Page() {
       <ProcessAndField
         workflow={data?.acf?.workflow}
         commitment={data?.acf?.commitment}
+        projects={{...data?.acf?.home_projects, projects: projectsRes}}
       />
       <ImpressivePost
         dataFilteredPosts={filteredPosts}
