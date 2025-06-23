@@ -34,7 +34,6 @@ export default async function Page() {
       },
     }),
   ])
-  console.log(data)
   return (
     <>
       <Banner bannerSlides={data?.acf?.banner_slides} />

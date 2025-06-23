@@ -13,7 +13,6 @@ interface OurProjectsProps {
 
 export default function OurProjects({projects}: OurProjectsProps) {
   const isMobile = useIsMobile()
-  console.log(projects)
   const {all_project, projects: project_list} = projects
   return (
     <div className='relative z-[100]'>
