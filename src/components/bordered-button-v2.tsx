@@ -7,7 +7,7 @@ interface CustomBorderedButtonProps {
   children: React.ReactNode
 }
 
-const CustomBorderedButton: React.FC<CustomBorderedButtonProps> = ({
+const CustomBorderedButtonV2: React.FC<CustomBorderedButtonProps> = ({
   color = '#0725b7',
   borderColor = '#ffffff',
   borderLine = 'rgba(255, 255, 255, 0.1)',
@@ -16,28 +16,28 @@ const CustomBorderedButton: React.FC<CustomBorderedButtonProps> = ({
   return (
     <div className='group relative inline-flex min-w-[14.25rem] cursor-pointer p-[0.1875rem] transition-all before:absolute before:top-0 before:left-0 before:block before:h-full before:w-full before:border before:border-solid before:border-[rgba(255,255,255,0.1)] max-sm:min-w-[9.15238rem]'>
       <div
-        className='absolute top-0 left-0 h-[3px] w-[3px]'
+        className='absolute top-0 left-0 z-5 h-[3px] w-[3px]'
         style={{
           borderLeft: `1px solid ${borderColor}`,
           borderTop: `1px solid ${borderColor}`,
         }}
       />
       <div
-        className='absolute top-0 right-0 h-[3px] w-[3px]'
+        className='absolute top-0 right-0 z-5 h-[3px] w-[3px]'
         style={{
           borderRight: `1px solid ${borderColor}`,
           borderTop: `1px solid ${borderColor}`,
         }}
       />
       <div
-        className='absolute bottom-0 left-0 h-[3px] w-[3px]'
+        className='absolute bottom-0 left-0 z-5 h-[3px] w-[3px]'
         style={{
           borderLeft: `1px solid ${borderColor}`,
           borderBottom: `1px solid ${borderColor}`,
         }}
       />
       <div
-        className='absolute right-0 bottom-0 h-[3px] w-[3px]'
+        className='absolute right-0 bottom-0 z-5 h-[3px] w-[3px]'
         style={{
           borderRight: `1px solid ${borderColor}`,
           borderBottom: `1px solid ${borderColor}`,
@@ -103,4 +103,4 @@ const CustomBorderedButton: React.FC<CustomBorderedButtonProps> = ({
   )
 }
 
-export default CustomBorderedButton
+export default CustomBorderedButtonV2

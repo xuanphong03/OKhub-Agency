@@ -5,39 +5,41 @@ interface CustomBorderedButtonProps {
   borderColor?: string
   borderLine?: string
   children: React.ReactNode
+  backgroundColor?: string
 }
 
 const CustomBorderedButtonV1: React.FC<CustomBorderedButtonProps> = ({
   color = '#0725b7',
   borderColor = '#ffffff',
   borderLine = 'rgba(255, 255, 255, 0.1)',
+  backgroundColor = 'white',
   children,
 }) => {
   return (
     <div className='group xsm:w-[5rem] relative inline-flex min-h-[2.125rem] min-w-[13.875rem] cursor-pointer p-[0.1875rem] px-[0.1875rem] transition-all sm:min-h-[2.625rem]'>
       <div
-        className='absolute top-0 left-0 h-[3px] w-[3px]'
+        className='absolute top-0 left-0 z-5 h-[3px] w-[3px]'
         style={{
           borderLeft: `1px solid ${borderColor}`,
           borderTop: `1px solid ${borderColor}`,
         }}
       />
       <div
-        className='absolute top-0 right-0 h-[3px] w-[3px]'
+        className='absolute top-0 right-0 z-5 h-[3px] w-[3px]'
         style={{
           borderRight: `1px solid ${borderColor}`,
           borderTop: `1px solid ${borderColor}`,
         }}
       />
       <div
-        className='absolute bottom-0 left-0 h-[3px] w-[3px]'
+        className='absolute bottom-0 left-0 z-5 h-[3px] w-[3px]'
         style={{
           borderLeft: `1px solid ${borderColor}`,
           borderBottom: `1px solid ${borderColor}`,
         }}
       />
       <div
-        className='absolute right-0 bottom-0 h-[3px] w-[3px]'
+        className='absolute right-0 bottom-0 z-5 h-[3px] w-[3px]'
         style={{
           borderRight: `1px solid ${borderColor}`,
           borderBottom: `1px solid ${borderColor}`,
@@ -51,7 +53,10 @@ const CustomBorderedButtonV1: React.FC<CustomBorderedButtonProps> = ({
       />
 
       {/* Inner Content */}
-      <div className='relative flex h-full w-full items-center bg-white'>
+      <div
+        className='relative flex h-full w-full items-center'
+        style={{backgroundColor: backgroundColor}}
+      >
         {/* Text Content */}
         <div className='xsm:whitespace-nowrap relative z-10 px-[3.1875rem] text-xs font-normal text-black transition-colors delay-100 duration-300 group-hover:text-white'>
           {children}
