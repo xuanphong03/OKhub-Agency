@@ -1,9 +1,11 @@
+'use client'
 import CustomBorderedButtonV1 from '@/components/bordered-button-v1'
+import {AppContext} from '@/provider/AppProvider'
 import {ILink} from '@/types/link.interace'
 import {IMedia} from '@/types/media.interface'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, {useContext} from 'react'
 
 interface MenuMobileProps {
   contactLink: ILink
@@ -25,6 +27,16 @@ export default function MenuMobile({
   contactLink,
   credential,
 }: MenuMobileProps) {
+  const context = useContext(AppContext)
+  if (!context) throw new Error('AppContext must be used within AppProvider')
+  const {setOpenMenuMobile} = context
+
+  const handleClickLinkItem = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (event.currentTarget.target === '_self') {
+      setOpenMenuMobile(false)
+    }
+  }
+
   return (
     <div className='relative h-screen w-full'>
       <div className='absolute top-0 left-0 z-0 h-full w-full'>
@@ -73,8 +85,9 @@ export default function MenuMobile({
                 <Link
                   key={index}
                   href={menuItem?.link?.url ?? '/'}
-                  target={menuItem?.link?.target}
+                  target={menuItem?.link?.target ?? '_self'}
                   className='flex h-[2.6875rem] items-center'
+                  onClick={(e) => handleClickLinkItem(e)}
                 >
                   <span className='text-[1.5rem] leading-[166.213%] font-normal text-[#081D1A]'>
                     {menuItem?.link?.title ?? ''}
@@ -120,8 +133,8 @@ export default function MenuMobile({
                 {credential?.title}
               </p>
               <Link
-                href={credential?.link_download?.url ?? '#'}
                 target='_blank'
+                href={credential?.link_download?.url ?? '#'}
                 className='relative inline-flex bg-[#293844] p-[0.54rem_0.96rem_0.36rem_0.46rem]'
               >
                 <span className='relative z-[1] text-[0.46769rem] leading-[120%] font-normal text-white'>
