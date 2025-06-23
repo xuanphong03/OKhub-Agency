@@ -149,12 +149,12 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
           >
             <div className='mr-[4rem] mb-[0.8125rem] inline-block h-[0rem] translate-y-[-0.5rem] max-sm:h-auto'>
               <div className='grid grid-cols-[1fr_1.37494rem] max-sm:grid-cols-[0.61963rem_1fr]'>
-                <div className='row-start-2 inline-flex bg-[#1650E5] p-[0.16044rem_0.48138rem] text-[1.625rem] leading-[134%] text-white max-sm:col-start-2 max-sm:text-[0.75rem]'>
+                <div className='inline-flex bg-[#1650E5] p-[0.16044rem_0.48138rem] text-[1.625rem] leading-[134%] text-white max-sm:col-start-2 max-sm:row-start-2 max-sm:text-[0.75rem]'>
                   {commitment?.tag ?? ''}
                 </div>
-                <div className='row-start-1 max-sm:col-start-2'></div>
-                <div className='row-start-2 max-sm:col-start-1'></div>
-                <div className='row-start-1 size-[1.37494rem] bg-[#1650E5] max-sm:col-start-1 max-sm:size-[0.61963rem]'></div>
+                <div className='max-sm:col-start-2 max-sm:row-start-1'></div>
+                <div className='max-sm:col-start-1 max-sm:row-start-2'></div>
+                <div className='size-[1.37494rem] bg-[#1650E5] max-sm:col-start-1 max-sm:row-start-1 max-sm:size-[0.61963rem]'></div>
               </div>
             </div>
             <div
