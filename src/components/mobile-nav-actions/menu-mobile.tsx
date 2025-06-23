@@ -103,9 +103,10 @@ export default function MenuMobile({
           </p>
           {contactLink && contactLink?.url && (
             <Link
-              href={contactLink?.url}
-              target={contactLink?.target}
+              href={contactLink?.url ?? '/'}
+              target={contactLink?.target ?? '_self'}
               className='relative inline-block'
+              onClick={handleClickLinkItem}
             >
               <CustomBorderedButtonV1
                 color='#00D3D0'
