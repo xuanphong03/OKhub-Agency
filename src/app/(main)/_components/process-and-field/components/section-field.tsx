@@ -7,6 +7,7 @@ import Image from 'next/image'
 import {useEffect, useRef} from 'react'
 
 export default function SectionField({commitment}: {commitment: Commitment}) {
+  console.log(commitment)
   const isMobile = useIsMobile()
   const speeds = [1.5, 1, 2.75, 1, 2.5, 1.5, 1, 2.5, 1.5, 1.5, 1, 2.25]
   const count = speeds.length
@@ -120,13 +121,6 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
           ref={fieldOfActivityRef}
           className='xsm:overflow-hidden absolute z-[11] h-screen w-full'
         >
-          <div className='mt-[3.75rem] mb-4 hidden pl-[1.6rem]'>
-            <div className='xsm:w-full relative flex h-[1.374rem] w-max items-center justify-center bg-[#1550e5] px-[0.21694rem] py-[0.07231rem]'>
-              <p className='text-xs leading-[134%] font-normal text-white'>
-                {commitment.tag ?? ''}
-              </p>
-            </div>
-          </div>
           <Image
             className='xsm:hidden absolute bottom-0 left-[-4.81rem] z-[-1] h-[36.25rem] w-[75rem]'
             src='https://seohub.okhub-tech.com/wp-content/uploads/2025/04/foot-r-img-bg3.webp'
@@ -150,20 +144,24 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
           />
           <div
             ref={fieldOfActivityTitleRef}
-            className='xsm:w-[21.4375rem] xsm:text-[1.875rem] xsm:top-[14rem] xsm:left-[12rem] absolute top-1/2 left-1/2 z-[1] w-[56.90819rem] -translate-x-1/2 -translate-y-1/2 text-[2.875rem] leading-[1.39] font-normal text-[#9c9c9c]'
+            className='xsm:w-[21.4375rem] xsm:top-[14rem] xsm:left-[12rem] absolute top-1/2 left-1/2 z-[1] w-[56.90819rem] -translate-x-1/2 -translate-y-1/2'
           >
+            <div className='mr-[4rem] mb-[0.8125rem] inline-block h-[0rem] translate-y-[-0.5rem] max-sm:h-auto'>
+              <div className='grid grid-cols-[1fr_1.37494rem] max-sm:grid-cols-[0.61963rem_1fr]'>
+                <div className='row-start-2 inline-flex bg-[#1650E5] p-[0.16044rem_0.48138rem] text-[1.625rem] leading-[134%] text-white max-sm:col-start-2 max-sm:text-[0.75rem]'>
+                  {commitment?.tag ?? ''}
+                </div>
+                <div className='row-start-1 max-sm:col-start-2'></div>
+                <div className='row-start-2 max-sm:col-start-1'></div>
+                <div className='row-start-1 size-[1.37494rem] bg-[#1650E5] max-sm:col-start-1 max-sm:size-[0.61963rem]'></div>
+              </div>
+            </div>
             <div
               dangerouslySetInnerHTML={{
                 __html: commitment.title,
               }}
+              className='inline text-[2.875rem] leading-[139.13%] font-normal text-[#9c9c9c] max-sm:text-[1.875rem] sm:[&_p]:inline'
             ></div>
-            <div className='sm:hidden'>
-              <div className='badge-lv absolute top-0 m-[0.625rem] flex w-max flex-col'>
-                <p className='relative flex h-[3.04881rem] w-0 items-center justify-center overflow-hidden bg-[#1550e5] px-[0.48138rem] text-[1.625rem] leading-[134%] font-normal whitespace-nowrap text-white opacity-0 transition-all duration-[0.75s] ease-in-out'>
-                  {commitment.tag ?? ''}
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
