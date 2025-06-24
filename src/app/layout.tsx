@@ -1,5 +1,6 @@
 import WebVitals from '@/app/_components/web-vitals'
 import {productSans} from '@/fonts/fonts'
+import AppProvider from '@/provider/AppProvider'
 import '@/styles/globals.css'
 import type {Metadata} from 'next'
 
@@ -25,8 +26,10 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className={`${productSans.className}`}>
-        <WebVitals />
-        {children}
+        <AppProvider>
+          <WebVitals />
+          {children}
+        </AppProvider>
       </body>
     </html>
   )
