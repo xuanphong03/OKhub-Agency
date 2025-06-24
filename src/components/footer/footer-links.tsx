@@ -40,15 +40,15 @@ const FooterLinks = ({
 
   return (
     <div className='flex'>
-      <nav className='pt-14 mr-[4.125rem] xsm:mr-[0rem] xsm:pt-0  xsm:mt-[1.675rem] xsm:w-full'>
+      <nav className='xsm:mr-[0rem] xsm:pt-0 xsm:mt-[1.675rem] xsm:w-full mr-[4.125rem] pt-14'>
         <ul>
           {footer.footer_link.map((item, index) => (
             <li key={index}>
               <Link
-                href={item.link.url}
+                href={item?.link?.url ?? '#'}
                 onMouseEnter={() => setHoveredIndex(index)}
                 className={cn(
-                  'text-2xl font-normal group leading-[2.49319rem] no-underline relative pr-[0.325rem] transition-colors duration-300 hover:text-[#1550e5] after:content-[""] after:absolute after:bottom-[-0.15rem] after:left-0 after:w-0 after:h-[0.1575rem] after:bg-[#1550e5] after:transition-all after:duration-400 hover:after:w-full xsm:border-t xsm:w-full xsm:block xsm:after:hidden xsm:pl-[0.75rem] xsm:py-[0.3175rem]',
+                  'group xsm:border-t xsm:w-full xsm:block xsm:after:hidden xsm:pl-[0.75rem] xsm:py-[0.3175rem] relative pr-[0.325rem] text-2xl leading-[2.49319rem] font-normal no-underline transition-colors duration-300 after:absolute after:bottom-[-0.15rem] after:left-0 after:h-[0.1575rem] after:w-0 after:bg-[#1550e5] after:transition-all after:duration-400 after:content-[""] hover:text-[#1550e5] hover:after:w-full',
                   hoveredIndex === index
                     ? 'text-[#1550e5] after:w-full'
                     : 'text-[#333]',
@@ -63,7 +63,7 @@ const FooterLinks = ({
                   width={240}
                   height={240}
                   className={cn(
-                    'inline-block w-[0.44263rem] h-[0.43794rem] absolute top-0 -right-2 opacity-0 transform -translate-x-[5px] transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-[5px] xsm:hidden',
+                    'xsm:hidden absolute top-0 -right-2 inline-block h-[0.43794rem] w-[0.44263rem] -translate-x-[5px] transform opacity-0 transition-all duration-300 group-hover:translate-x-[5px] group-hover:opacity-100',
                     hoveredIndex === index && 'opacity-100',
                   )}
                 />
@@ -72,11 +72,11 @@ const FooterLinks = ({
           ))}
         </ul>
       </nav>
-      <div className='pt-14 pr-[3.065rem] xsm:hidden'>
+      <div className='xsm:hidden pt-14 pr-[3.065rem]'>
         <div className='flex items-center'>
           <p
             ref={contentRef}
-            className="relative text-[#333] text-sm font-normal leading-[1.42188rem] pr-[0.5625rem] after:content-[''] after:absolute after:top-1/2 after:right-0 after:-translate-y-1/2 after:h-[45%] after:bg-[#ccc] after:w-[0.07rem]"
+            className="relative pr-[0.5625rem] text-sm leading-[1.42188rem] font-normal text-[#333] after:absolute after:top-1/2 after:right-0 after:h-[45%] after:w-[0.07rem] after:-translate-y-1/2 after:bg-[#ccc] after:content-['']"
           >
             {footer.footer_link[hoveredIndex].link.title}
           </p>
@@ -89,12 +89,12 @@ const FooterLinks = ({
             alt='arrow-gray'
             width={144}
             height={62}
-            className='pl-[0.5625rem] w-[1.625rem] h-[0.625rem]'
+            className='h-[0.625rem] w-[1.625rem] pl-[0.5625rem]'
           />
         </div>
         <p
           ref={descRef}
-          className='mt-3 w-[13.711rem] text-[#aaa] text-sm font-normal leading-[1.42188rem] xsm:hidden'
+          className='xsm:hidden mt-3 w-[13.711rem] text-sm leading-[1.42188rem] font-normal text-[#aaa]'
         >
           {footer.footer_link[hoveredIndex].link_desc}
         </p>

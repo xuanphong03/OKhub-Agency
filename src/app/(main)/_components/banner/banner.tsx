@@ -6,7 +6,7 @@ import BannerPC from './components/banner-pc'
 const Banner = ({bannerSlides}: {bannerSlides: IBanner[]}) => {
   return (
     <section
-      className='flex justify-center bg-[#f7f7f7] h-[41.38rem] max-w-full w-screen mx-auto pb-8 xsm:bg-white xsm:p-0'
+      className='xsm:bg-white xsm:p-0 mx-auto flex h-[41.38rem] w-screen max-w-full justify-center bg-[#f7f7f7] pb-8 max-sm:h-auto'
       id='banner'
     >
       <BannerPC bannerSlides={bannerSlides} />

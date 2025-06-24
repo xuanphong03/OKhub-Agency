@@ -1,313 +1,340 @@
-import type {IBanner} from '@/types/banner.interface'
-import Image from 'next/image'
 import {useRef, useState} from 'react'
-import type {Swiper as SwiperType} from 'swiper'
-import {Autoplay, EffectFade, Pagination} from 'swiper/modules'
 import {Swiper, SwiperSlide} from 'swiper/react'
-
+import {Autoplay, EffectFade, Pagination} from 'swiper/modules'
 import {cn} from '@/lib/utils'
+import Image from 'next/image'
+import type {IBanner} from '@/types/banner.interface'
+import type {Swiper as SwiperClass} from 'swiper'
+
 import 'swiper/css'
 import 'swiper/css/effect-fade'
 import 'swiper/css/pagination'
+import './banner-mobile.css'
 
+// Interface props truyền vào component
 interface BannerMobileProps {
   bannerSlides: IBanner[]
 }
+// Icon mũi tên trái
+function IconArrowLeft(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width='11'
+      height='17'
+      viewBox='0 0 11 17'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      {...props}
+    >
+      <rect
+        opacity='0.4'
+        x='10.8206'
+        y='3.59906'
+        width='10.9072'
+        height='4.07425'
+        rx='2.03713'
+        transform='rotate(135 10.8206 3.59906)'
+        fill='#1550E5'
+      />
+      <rect
+        x='7.93976'
+        y='16.2819'
+        width='10.9072'
+        height='4.07425'
+        rx='2.03713'
+        transform='rotate(-135 7.93976 16.2819)'
+        fill='#1550E5'
+      />
+    </svg>
+  )
+}
+// Icon mũi tên phải
+function IconArrowRight(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width='11'
+      height='17'
+      viewBox='0 0 11 17'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      {...props}
+    >
+      <rect
+        x='0.208923'
+        y='13.4009'
+        width='10.9072'
+        height='4.07425'
+        rx='2.03713'
+        transform='rotate(-45 0.208923 13.4009)'
+        fill='white'
+        fillOpacity='0.62'
+      />
+      <rect
+        x='3.08972'
+        y='0.718109'
+        width='10.9072'
+        height='4.07425'
+        rx='2.03713'
+        transform='rotate(45 3.08972 0.718109)'
+        fill='white'
+      />
+    </svg>
+  )
+}
 
 const BannerMobile = ({bannerSlides}: BannerMobileProps) => {
-  const [showAfter, setShowAfter] = useState(false)
-  const [showRightText, setShowRightText] = useState(false)
-  const swiperRef = useRef<{swiper: SwiperType} | null>(null)
-
-  const handleToggleImage = () => {
-    setShowAfter(!showAfter)
-    setShowRightText(!showRightText)
-
-    // Stop autoplay when toggled
-    if (swiperRef.current?.swiper) {
-      if (!showAfter) {
-        swiperRef.current.swiper.autoplay.stop()
-      } else {
-        swiperRef.current.swiper.autoplay.start()
+  // Index hiện tại của slide đang hiển thị
+  const [activeIndex, setActiveIndex] = useState(0)
+  // Trạng thái toggle nội dung của từng slide
+  const [slideToggles, setSlideToggles] = useState<Record<number, boolean>>({})
+  // Ref tới container tổng
+  const bannerContainerRef = useRef<HTMLDivElement>(null)
+  // Ref tới từng element nội dung và button trong từng slide
+  const contentRefs = useRef<
+    Record<
+      number,
+      {
+        defaultEl: HTMLParagraphElement | null
+        activeEl: HTMLParagraphElement | null
+        buttonEl: HTMLButtonElement | null
       }
+    >
+  >({})
+  // Hàm xử lý khi người dùng bấm nút chuyển đổi nội dung
+  const handleToggleContent = (index: number) => {
+    const current = contentRefs.current[index]
+    if (!current?.defaultEl || !current?.activeEl || !current?.buttonEl) return
+
+    const defaultHeight = current.defaultEl.getBoundingClientRect().height
+    const activeHeight = current.activeEl.getBoundingClientRect().height
+    const diff = Math.abs(defaultHeight - activeHeight)
+
+    const willBeActive = !slideToggles[index]
+
+    // Di chuyển nút theo độ cao khác biệt giữa 2 nội dung
+    current.buttonEl.style.transform = willBeActive
+      ? `translateY(${diff}px)`
+      : `translateY(0px)`
+
+    setSlideToggles((prev) => ({
+      ...prev,
+      [index]: willBeActive,
+    }))
+  }
+  // Helper để ẩn/hiện element bằng class Tailwind
+  const toggleVisibility = (visible: boolean) => {
+    return visible ? 'visible opacity-100' : 'invisible opacity-0'
+  }
+  // Hàm xử lý khi đổi slide
+  const handleSlideChange = (swiper: SwiperClass) => {
+    const newIndex = swiper.realIndex
+    // 🔒 Tránh setState nếu không thay đổi thực sự
+    if (newIndex === activeIndex) return
+    const oldIndex = activeIndex
+    setActiveIndex(newIndex)
+    // Xóa trạng thái toggle của slide cũ
+    setSlideToggles((prev) => {
+      const updated = {...prev}
+      delete updated[oldIndex]
+      return updated
+    })
+    // Reset vị trí nút toggle của slide cũ
+    const oldRef = contentRefs.current[oldIndex]
+    if (oldRef?.buttonEl) {
+      oldRef.buttonEl.style.transform = 'translateY(0px)'
     }
   }
 
   return (
-    <section
-      className='w-full relative h-full hidden xsm:block'
-      id='banner-mb'
-    >
-      <div className='ml-[1.11rem]'>
-        <h2 className='flex items-center py-[0.41rem] mt-[1.1rem] mb-[0.61rem]'>
+    <div className='relative h-full w-full self-stretch bg-[#F7F7F7] sm:hidden'>
+      <Image
+        alt=''
+        width={375}
+        height={678}
+        src='/banner/bg-grid-mb.webp'
+        className='absolute bottom-[7.5625rem] left-0 z-0 h-auto w-full'
+      />
+      <div className='absolute bottom-0 left-0 h-[2.5rem] w-full bg-white'></div>
+
+      <div className='relative z-[1] mt-[1.5rem] px-[1rem]'>
+        <p className='flex items-center space-x-[0.26144rem] py-[0.41025rem]'>
           <Image
-            src='/banner/okhub-icon-v3.svg'
             alt=''
-            height={20}
-            width={22}
-            className='w-[2.18944rem] h-auto'
+            width={35.0315}
+            height={17.5611}
+            src='/banner/okhub-icon-v3.svg'
+            className='h-auto w-[2.18944rem] shrink-0'
           />
-          <span className='text-[0.875rem] text-[#1550E5] font-medium ml-[0.26144rem]'>
+          <span className='text-[0.875rem] font-medium text-[#1550E5]'>
             OKhub cho rằng
           </span>
-        </h2>
+        </p>
+        <div className='my-[0.625rem] h-[1px] w-full bg-[#e6e6e6]'></div>
       </div>
-      <div className='mx-auto w-[21.16044rem] border-[1px] border-solid border-[#E6E6E6]' />
-      {/* 
-      <style
-        jsx
-        global
-      >{`
-        .banner-mb .swiper-pagination {
-          bottom: 3.95rem !important;
-          width: 18.77331rem !important;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          left: 53.5% !important;
-          transform: translateX(-50%);
-          position: absolute;
-        }
-        .banner-mb .swiper-pagination-bullet {
-          flex: 1;
-          height: 0.56rem;
-          background: none;
-          padding: 0;
-          margin: 0 !important;
-          opacity: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: background 0.2s;
-        }
 
-        .banner-mb .swiper-pagination-bullet svg path {
-          fill: #e4eaef;
-          transition: fill 0.2s;
-        }
-
-        .banner-mb .swiper-pagination-bullet-active svg path {
-          fill: #1550e5;
-        }
-
-        .banner-mb .pagination-svg-reverse {
-          transform: scaleY(-1);
-        }
-
-        .banner-image {
-          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-          transform-origin: center;
-        }
-
-        .banner-image.fade-out {
-          opacity: 0;
-        }
-
-        .banner-image.fade-in {
-          opacity: 1;
-          transform: scale(1);
-        }
-
-        .change-button {
-          transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .change-button.changed {
-          transform: translate(2.5rem, 0);
-        }
-
-        .change-des {
-          transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .change-des.changed {
-          width: 9.23681rem;
-        }
-
-        .change-arrow {
-          transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .change-arrow.left {
-          transform: scale(0);
-          opacity: 0;
-        }
-
-        .change-arrow.right {
-          transform: scale(1);
-          opacity: 1;
-        }
-
-        .change-arrow.left.changed {
-          transform: scale(1);
-          opacity: 1;
-        }
-
-        .change-arrow.right.changed {
-          transform: scale(0);
-          opacity: 0;
-        }
-      `}</style> */}
-      <Swiper
-        ref={swiperRef}
-        className='banner-mb w-full h-full banner-mb'
-        modules={[Pagination, EffectFade, Autoplay]}
-        pagination={{
-          clickable: true,
-          renderBullet: (index: number, className: string) => `
-          <span class="${className} ${
-            index % 2 === 1 ? 'pagination-svg-reverse' : ''
-          }">
-          <svg xmlns="http://www.w3.org/2000/svg" width="121" height="9" viewBox="0 0 121 9" fill="none">
-            <path d="M1.16561 4.73895C0.0303082 6.03128 0.947969 8.05893 2.66815 8.05893L118.203 8.05893C119.923 8.05893 120.84 6.03128 119.705 4.73895L116.332 0.898769C115.952 0.466526 115.404 0.21875 114.829 0.21875H6.04174C5.4664 0.21875 4.91892 0.466526 4.5392 0.898769L1.16561 4.73895Z" fill="#1550E5"/>
-          </svg>
-        </span>
-        `,
-        }}
-        effect='fade'
-        fadeEffect={{
-          crossFade: true,
-        }}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }}
-        allowTouchMove={true}
-        loop={true}
-        speed={1000}
+      <div
+        ref={bannerContainerRef}
+        className='relative z-[1] h-[32.5rem] w-full'
       >
-        {bannerSlides?.map((item, index: number) => (
-          <SwiperSlide key={index}>
-            <p
-              className={`text-[1.25rem] leading-[1.75rem] text-black w-[18.75rem] pl-[1rem] mt-[0.625rem] transition-opacity duration-700 ${
-                showRightText ? 'opacity-0 absolute' : 'opacity-100'
-              }`}
-            >
-              {item.home_banner_des_l}
-            </p>
-            <p
-              className={`text-[1.25rem] leading-[1.25rem] text-black w-[18.75rem] pl-[1rem] mt-[0.625rem] transition-opacity duration-700 ${
-                showRightText ? 'opacity-100' : 'opacity-0 absolute'
-              }`}
-            >
-              {item.home_banner_des_r}
-            </p>
-
-            <div
-              onClick={handleToggleImage}
-              className='flex items-center ml-[1rem] mt-[0.625rem]'
-            >
-              <div
-                className={`size-[2.541rem] backdrop-blur-[2px] border-[1px] border-[#e6e6e6] bg-[rgba(255,255,255,0.39)] flex items-center justify-center rounded-[1.275rem] cursor-pointer transition-all duration-700 ease-in-out transform change-arrow left ${
-                  showAfter ? 'changed' : ''
-                }`}
-              >
-                <svg
-                  width='11'
-                  height='17'
-                  viewBox='0 0 11 17'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <rect
-                    opacity='0.4'
-                    x='10.8206'
-                    y='3.59906'
-                    width='10.9072'
-                    height='4.07425'
-                    rx='2.03713'
-                    transform='rotate(135 10.8206 3.59906)'
-                    fill='#1550E5'
-                  />
-                  <rect
-                    x='7.93976'
-                    y='16.2819'
-                    width='10.9072'
-                    height='4.07425'
-                    rx='2.03713'
-                    transform='rotate(-135 7.93976 16.2819)'
-                    fill='#1550E5'
-                  />
+        {Array.isArray(bannerSlides) && (
+          <Swiper
+            effect='fade'
+            onSlideChange={handleSlideChange}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            allowTouchMove={true}
+            loop={true}
+            speed={1000}
+            fadeEffect={{
+              crossFade: true,
+            }}
+            pagination={{
+              el: '.banner-pagination',
+              clickable: true,
+              renderBullet: (index: number, className: string) => `
+              <span class="${className}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="67" height="5" viewBox="0 0 67 5" fill="none">
+                <path d="M0.476712 2.90567C-0.164921 3.70243 0.402239 4.88736 1.42524 4.88736L65.7598 4.88736C66.7828 4.88736 67.3499 3.70243 66.7083 2.90567L64.8252 0.567286C64.594 0.280211 64.2453 0.113281 63.8767 0.113281H3.30833C2.93974 0.113281 2.59098 0.280211 2.3598 0.567286L0.476712 2.90567Z" />
                 </svg>
-              </div>
-              <button
-                className={cn(
-                  `h-[2.5rem] rounded-[1.275rem] border-[1px] border-[#e6e6e6] backdrop-blur-[2px] text-[0.925rem] transition-all duration-700 ease-in-out transform change-button change-des`,
-                  showAfter
-                    ? 'bg-[rgba(255,255,255,0.39)] text-[#1550E5] w-[9.25rem] changed'
-                    : 'bg-gradient-to-b from-[#001cb3] to-[#548beb] text-white font-bold w-[7rem]',
-                )}
-              >
-                {showAfter ? 'Mọi người thấy' : 'NHƯNG !!'}
-              </button>
-              {/* <div
-                className={`size-[2.541rem] backdrop-blur-[2px] bg-gradient-to-b from-[#001cb3] to-[#548beb] flex items-center justify-center rounded-[1.275rem] cursor-pointer transition-all duration-700 ease-in-out transform change-arrow right ${
-                  showAfter ? '' : 'changed'
-                }`}
-              >
-                <svg
-                  width='11'
-                  height='17'
-                  viewBox='0 0 11 17'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
+              </span>`,
+            }}
+            modules={[EffectFade, Pagination, Autoplay]}
+            className='relative h-[31.65rem] w-full'
+          >
+            {bannerSlides.map((banner, index) => {
+              const isContentActive = slideToggles[index] || false
+              return (
+                <SwiperSlide
+                  key={index}
+                  className='banner-slide relative h-full w-full'
                 >
-                  <rect
-                    x='0.208923'
-                    y='13.4009'
-                    width='10.9072'
-                    height='4.07425'
-                    rx='2.03713'
-                    transform='rotate(-45 0.208923 13.4009)'
-                    fill='white'
-                    fillOpacity='0.62'
+                  <div className='relative z-5 h-full w-full px-[1rem]'>
+                    <div className='relative h-full w-full'>
+                      <p
+                        ref={(el) => {
+                          if (!contentRefs.current[index])
+                            contentRefs.current[index] = {
+                              defaultEl: null,
+                              activeEl: null,
+                              buttonEl: null,
+                            }
+                          contentRefs.current[index].defaultEl = el
+                        }}
+                        className={cn(
+                          'content--default relative max-w-[18.75rem] text-[1.25rem] leading-[140%] text-black transition-all duration-800 ease-in-out',
+                          toggleVisibility(!isContentActive),
+                        )}
+                      >
+                        {banner?.home_banner_des_l ?? ''}
+                      </p>
+                      <p
+                        ref={(el) => {
+                          if (!contentRefs.current[index])
+                            contentRefs.current[index] = {
+                              defaultEl: null,
+                              activeEl: null,
+                              buttonEl: null,
+                            }
+                          contentRefs.current[index].activeEl = el
+                        }}
+                        className={cn(
+                          'content--active absolute top-0 left-0 max-w-[18.75rem] text-[1.25rem] leading-[140%] text-black transition-all duration-800 ease-in-out',
+                          toggleVisibility(isContentActive),
+                        )}
+                      >
+                        {banner?.home_banner_des_r ?? ''}
+                      </p>
+                      <button
+                        ref={(el) => {
+                          if (!contentRefs.current[index])
+                            contentRefs.current[index] = {
+                              defaultEl: null,
+                              activeEl: null,
+                              buttonEl: null,
+                            }
+                          contentRefs.current[index].buttonEl = el
+                        }}
+                        onClick={() => handleToggleContent(index)}
+                        className={cn(
+                          'btn-toggle mt-[0.625rem] inline-flex items-center transition-all duration-800 ease-in-out',
+                          isContentActive
+                            ? 'translate-x-[0rem]'
+                            : 'translate-x-[-2.54188rem]',
+                        )}
+                      >
+                        <span
+                          className={cn(
+                            'inline-flex h-[2.54188rem] w-[2.54188rem] shrink-0 items-center justify-center rounded-full border border-solid border-[#e6e6e6] bg-[rgba(255,255,255,0.39)] backdrop-blur-[2px] transition-all duration-800 ease-in-out',
+                            !isContentActive ? 'scale-0' : 'scale-100',
+                            toggleVisibility(isContentActive),
+                          )}
+                        >
+                          <IconArrowLeft className='h-[0.97275rem] w-[0.66213rem]' />
+                        </span>
+                        <span
+                          className={cn(
+                            'relative inline-flex h-[2.55238rem] items-center justify-center overflow-hidden rounded-[1.27619rem] border border-solid border-[#e6e6e6] bg-[rgba(255,255,255,0.39)] pr-[1.76rem] pl-[1.67rem] text-[0.90956rem] leading-[134%] backdrop-blur-[2px] transition-all duration-800 ease-in-out after:absolute after:top-0 after:left-0 after:z-0 after:h-full after:w-full after:bg-[linear-gradient(180deg,#001cb3_0%,#548beb_88.7%)] after:transition-all after:duration-800 after:ease-in-out',
+                            isContentActive
+                              ? 'text-[#1550E5] after:opacity-0'
+                              : 'text-white after:opacity-100',
+                          )}
+                        >
+                          <span className='relative z-[1]'>
+                            {isContentActive ? 'NHƯNG !!' : 'Mọi người thấy'}
+                          </span>
+                        </span>
+                        <span
+                          className={cn(
+                            'inline-flex h-[2.54188rem] w-[2.54188rem] shrink-0 items-center justify-center rounded-full border border-solid border-[#e6e6e6] bg-[linear-gradient(180deg,#001cb3_0%,#548beb_88.7%)] backdrop-blur-[2px] transition-all duration-800 ease-in-out',
+                            isContentActive ? 'scale-0' : 'scale-100',
+                            toggleVisibility(!isContentActive),
+                          )}
+                        >
+                          <IconArrowRight className='h-[0.97275rem] w-[0.66213rem]' />
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <Image
+                    alt=''
+                    width={375}
+                    height={275.5591}
+                    src={banner?.img_after?.url}
+                    className={cn(
+                      'absolute bottom-0 left-0 z-[1] h-auto w-full transition-all duration-800 ease-in-out',
+                      toggleVisibility(!isContentActive),
+                    )}
                   />
-                  <rect
-                    x='3.08972'
-                    y='0.718109'
-                    width='10.9072'
-                    height='4.07425'
-                    rx='2.03713'
-                    transform='rotate(45 3.08972 0.718109)'
-                    fill='white'
+                  <Image
+                    alt=''
+                    width={375}
+                    height={275.5591}
+                    src={banner?.img_before?.url}
+                    className={cn(
+                      'absolute bottom-0 left-0 z-[2] h-auto w-full transition-all duration-800 ease-in-out',
+                      toggleVisibility(isContentActive),
+                    )}
                   />
-                </svg>
-              </div> */}
-            </div>
-
-            <Image
-              src={item.img_before.url}
-              alt={item.img_before.alt}
-              width={1000}
-              height={1000}
-              className={`object-cover absolute bottom-[4.8rem] left-[0.875rem] transition-opacity duration-700 ${
-                showAfter ? 'opacity-0' : 'opacity-100'
-              }`}
-            />
-
-            <Image
-              src={item.img_after.url}
-              alt={item.img_after.alt}
-              width={1000}
-              height={1000}
-              className={`object-cover absolute bottom-[4.8rem] left-[0.875rem] transition-opacity duration-700 ${
-                showAfter ? 'opacity-100' : 'opacity-0'
-              }`}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      <Image
-        src={
-          'https://seohub.okhub-tech.com/wp-content/uploads/2025/04/bannermbbg.webp'
-        }
-        alt=''
-        width={1000}
-        height={1000}
-        className='object-cover absolute bottom-0 left-0'
-      />
-    </section>
+                </SwiperSlide>
+              )
+            })}
+          </Swiper>
+        )}
+        <Image
+          alt=''
+          width={375}
+          height={238.0028}
+          src='/banner/bg-banner-mb.svg'
+          className='absolute bottom-0 left-0 h-auto w-full'
+        />
+        <div className='absolute bottom-0 left-1/2 w-[16.9375rem] -translate-x-1/2 pb-[0.25rem]'>
+          <div className='banner-pagination flex w-full items-center justify-between'></div>
+        </div>
+      </div>
+    </div>
   )
 }
 

@@ -1,0 +1,24 @@
+.banner-pagination .swiper-pagination-bullet {
+  flex: 1 0 0 !important;
+  border-radius: 0% !important;
+  margin: 0 !important;
+  background: transparent !important;
+  opacity: 1 !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+.banner-pagination .swiper-pagination-bullet svg {
+  width: 100%;
+  height: auto;
+  fill: #e4eaef;
+}
+.banner-pagination .swiper-pagination-bullet-active svg {
+  fill: #1550e5;
+}
+.banner-pagination .swiper-pagination-bullet:nth-child(2n) svg {
+  rotate: 0deg;
+}
+.banner-pagination .swiper-pagination-bullet:nth-child(2n + 1) svg {
+  rotate: 180deg;
+}

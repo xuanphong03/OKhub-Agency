@@ -1,0 +1,151 @@
+.banner-pc .swiper-pagination {
+  bottom: 0 !important;
+  width: 30.34381rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 50% !important;
+  transform: translateX(-50%);
+  position: absolute;
+}
+.banner-pc .swiper-pagination-bullet {
+  flex: 1;
+  height: 0.56rem;
+  background: none;
+  padding: 0;
+  margin: 0 !important;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.banner-pc .swiper-pagination-bullet svg path {
+  fill: #e4eaef;
+  transition: fill 0.2s;
+}
+
+.banner-pc .swiper-pagination-bullet-active svg path {
+  fill: #1550e5;
+}
+
+.banner-pc .pagination-svg-reverse {
+  transform: scaleY(-1);
+}
+
+.banner-image {
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.banner-image.fade-out {
+  opacity: 0;
+}
+
+.banner-image.fade-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.banner-text {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.banner-text .text-line {
+  position: relative;
+  z-index: 50;
+  color: #081d1a;
+  transition: color 0.5s ease;
+}
+
+.banner-text .text-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #1550e5;
+  z-index: -1;
+  transition: width 0.5s ease;
+}
+
+.banner-text .text-line::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  color: #ffffff;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 0.5s ease;
+}
+
+.hover-div:hover .text-line::before {
+  width: 100%;
+}
+
+.hover-div:hover .text-line::after {
+  width: 100%;
+}
+
+/* Style cho từng dòng */
+.highlight-line {
+  display: inline-block;
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+  position: relative;
+  transition: color 0.5s ease-in-out;
+  white-space: nowrap;
+}
+/* Style cho từng dòng */
+.highlight-line:not(:last-child) {
+  margin-bottom: 0.33rem;
+}
+
+.content-box2:hover .highlight-line::before {
+  width: 100%;
+}
+.content-box2:hover .highlight-line {
+  white-space: nowrap;
+  /* 	color: white; */
+}
+
+/* Khi hover, mở rộng background và đổi màu chữ */
+.highlight-line.hovered {
+  white-space: nowrap;
+  color: white;
+}
+
+.highlight-line .inner-highlight-line {
+  display: inline-block;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  white-space: nowrap;
+  color: white;
+  transition: width 0.5s ease-in-out;
+  /* 	transition: width 1.25s cubic-bezier(.75,0,.25,1); */
+}
+
+.highlight-line .inner-highlight-line::after {
+  content: attr(data-text); /* Sẽ lấy nội dung từ thuộc tính data-text */
+  position: relative;
+  color: white;
+  height: 100%;
+  white-space: nowrap;
+  z-index: 1;
+  background: #1550e5;
+  padding: 0 0.25rem;
+  display: inline-block;
+}
+
+.content-box2:hover .inner-highlight-line {
+  width: 100%;
+}
