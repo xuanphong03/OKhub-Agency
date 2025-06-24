@@ -274,7 +274,7 @@ const ProcessAndField = ({
             />
           </div>
 
-          <div className='xsm:flex-col xsm:relative xsm:border-t-none absolute bottom-0 z-10 flex w-full overflow-x-hidden border-t border-[#e6e8ea]'>
+          <div className='xsm:flex-col xsm:relative xsm:border-t-none absolute bottom-0 z-10 flex w-full overflow-x-hidden border-t-[0.833px] border-[#e6e8ea]'>
             {workflow?.workflow_list?.map((item, index) => (
               <WorkflowItem
                 key={index}

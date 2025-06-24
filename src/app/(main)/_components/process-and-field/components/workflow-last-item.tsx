@@ -10,7 +10,7 @@ export const WorkflowLastItem = ({workflow}: WorkflowLastItemProps) => {
   return (
     <div
       data-speed='1'
-      className='item-snapping last-item relative flex h-[22.6875rem] w-full flex-row justify-start bg-gradient-to-b from-[#548beb] to-[#0059f1] p-5 pl-[1.875rem] sm:border-l sm:border-[#e6e8ea]'
+      className='item-snapping last-item relative flex h-[22.6875rem] w-full flex-row justify-start bg-gradient-to-b from-[#548beb] to-[#0059f1] p-5 pl-[1.875rem] sm:border-l-[0.833px] sm:border-[rgba(239,239,239,0.3)]'
     >
       <div className='xsm:justify-start flex h-full flex-col justify-between'>
         <div
