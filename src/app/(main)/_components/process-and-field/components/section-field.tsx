@@ -147,7 +147,7 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
             ref={fieldOfActivityTitleRef}
             className='xsm:w-[21.4375rem] xsm:top-[14rem] xsm:left-[12rem] absolute top-1/2 left-1/2 z-[1] w-[56.90819rem] -translate-x-1/2 -translate-y-1/2'
           >
-            <div className='mr-[4rem] mb-[0.8125rem] inline-block h-[0rem] translate-y-[-0.5rem] max-sm:h-auto'>
+            <div className='xsm:block xsm:max-w-fit mr-[4rem] mb-[0.8125rem] inline-block h-[0rem] translate-y-[-0.5rem] max-sm:h-auto'>
               <div className='grid grid-cols-[1fr_1.37494rem] max-sm:grid-cols-[0.61963rem_1fr]'>
                 <div className='inline-flex bg-[#1650E5] p-[0.16044rem_0.48138rem] text-[1.625rem] leading-[134%] text-white max-sm:col-start-2 max-sm:row-start-2 max-sm:text-[0.75rem]'>
                   {commitment?.tag ?? ''}
@@ -161,7 +161,7 @@ export default function SectionField({commitment}: {commitment: Commitment}) {
               dangerouslySetInnerHTML={{
                 __html: commitment.title,
               }}
-              className='inline text-[2.875rem] leading-[139.13%] font-normal text-[#9c9c9c] max-sm:text-[1.875rem] sm:[&_p]:inline'
+              className='xsm:block inline text-[2.875rem] leading-[139.13%] font-normal text-[#9c9c9c] max-sm:text-[1.875rem] sm:[&_p]:inline'
             ></div>
           </div>
         </div>
