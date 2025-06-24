@@ -15,7 +15,7 @@ export default function OurProjects({projects}: OurProjectsProps) {
   const isMobile = useIsMobile()
   const {all_project, projects: project_list} = projects
   return (
-    <div className='relative z-[100]'>
+    <div className='relative z-1'>
       {!isMobile && (
         <Image
           alt=''
