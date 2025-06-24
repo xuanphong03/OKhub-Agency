@@ -53,10 +53,7 @@ function DetailWrapperSvgPC(props: React.SVGProps<SVGSVGElement>) {
       fill='none'
       {...props}
     >
-      <path
-        d='M216.61 45.758V15.7285C216.61 7.44424 209.894 0.728516 201.61 0.728516H41.8474C36.4773 0.728516 31.5169 3.59929 28.8415 8.25551L1.25685 56.2634C0.107682 58.2634 1.55139 60.758 3.85802 60.758H201.61C209.894 60.758 216.61 54.0423 216.61 45.758Z'
-        fill='#00D3D0'
-      />
+      <path d='M216.61 45.758V15.7285C216.61 7.44424 209.894 0.728516 201.61 0.728516H41.8474C36.4773 0.728516 31.5169 3.59929 28.8415 8.25551L1.25685 56.2634C0.107682 58.2634 1.55139 60.758 3.85802 60.758H201.61C209.894 60.758 216.61 54.0423 216.61 45.758Z' />
     </svg>
   )
 }
@@ -89,7 +86,7 @@ export default function PostCardPrimary({
   return (
     <article
       className={clsx(
-        'relative cursor-pointer overflow-hidden rounded-[1.25rem] max-sm:rounded-[0.42219rem]',
+        'group relative cursor-pointer overflow-hidden rounded-[1.25rem] max-sm:rounded-[0.42219rem]',
         className,
       )}
     >
@@ -108,7 +105,7 @@ export default function PostCardPrimary({
         <ContentWrapperSvgMb className='h-[5.75919rem] w-full sm:hidden' />
       </div>
       <div className='absolute right-[1.67rem] bottom-[1.75rem] z-[1] max-sm:right-[0.5rem] max-sm:bottom-[0.5rem]'>
-        <DetailWrapperSvgPC className='h-[3.75rem] w-[13.125em] max-sm:hidden' />
+        <DetailWrapperSvgPC className='h-[3.75rem] w-[13.125em] fill-[#00D3D0] transition-all duration-[600ms] ease-out max-sm:hidden lg:group-hover:fill-[#0BB]' />
         <DetailWrapperSvgMb className='h-[1.62338rem] w-[5.53056rem] sm:hidden' />
       </div>
       <div className='absolute top-[19.04rem] right-[3.73rem] left-[2.52rem] z-[2] max-sm:top-[9.9rem] max-sm:right-[1.67rem] max-sm:left-[1.04rem]'>
