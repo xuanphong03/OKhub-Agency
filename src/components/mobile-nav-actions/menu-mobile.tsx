@@ -1,7 +1,7 @@
 'use client'
 import CustomBorderedButtonV1 from '@/components/bordered-button-v1'
 import {AppContext} from '@/provider/AppProvider'
-import {ILink} from '@/types/link.interace'
+import {ILink} from '@/types/link.interface'
 import {IMedia} from '@/types/media.interface'
 import {useGSAP} from '@gsap/react'
 import gsap from 'gsap'

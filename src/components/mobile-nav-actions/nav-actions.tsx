@@ -1,7 +1,7 @@
 'use client'
 import ButtonMenu from '@/components/mobile-nav-actions/button-menu'
 import {AppContext} from '@/provider/AppProvider'
-import {ILink} from '@/types/link.interace'
+import {ILink} from '@/types/link.interface'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, {useContext, useEffect} from 'react'

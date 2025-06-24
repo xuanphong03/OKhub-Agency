@@ -6,7 +6,7 @@ import IconArrowLeft from '@/components/icon/IconArrowLeft'
 import IconArrowRight from '@/components/icon/IconArrowRight'
 import {Skeleton} from '@/components/ui/skeleton'
 import useIsMobile from '@/hooks/useIsMobile'
-import {ILink} from '@/types/link.interace'
+import {ILink} from '@/types/link.interface'
 import Link from 'next/link'
 import React, {useEffect, useRef} from 'react'
 

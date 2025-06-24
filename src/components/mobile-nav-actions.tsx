@@ -3,7 +3,7 @@ import MenuMobile from '@/components/mobile-nav-actions/menu-mobile'
 import NavActions from '@/components/mobile-nav-actions/nav-actions'
 import {cn} from '@/lib/utils'
 import {AppContext} from '@/provider/AppProvider'
-import {ILink} from '@/types/link.interace'
+import {ILink} from '@/types/link.interface'
 import {IMedia} from '@/types/media.interface'
 import React, {useContext} from 'react'
 
