@@ -17,8 +17,8 @@
   fill: #1550e5;
 }
 .banner-pagination .swiper-pagination-bullet:nth-child(2n) svg {
-  rotate: 0deg;
+  rotate: 180deg;
 }
 .banner-pagination .swiper-pagination-bullet:nth-child(2n + 1) svg {
-  rotate: 180deg;
+  rotate: 0deg;
 }
