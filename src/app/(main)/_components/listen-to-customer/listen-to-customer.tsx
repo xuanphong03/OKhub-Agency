@@ -72,10 +72,10 @@ const ListenToCustomer = ({
           loop={true}
           speed={500}
           allowTouchMove={false}
-          // autoplay={{
-          //   delay: 4000,
-          //   disableOnInteraction: false,
-          // }}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
           effect='fade'
           fadeEffect={{
             crossFade: true,
