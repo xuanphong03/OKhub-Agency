@@ -58,7 +58,7 @@ export default function OurProjects({projects}: OurProjectsProps) {
 
               return (
                 <Link
-                  href={project?.link ?? '/'}
+                  href={project?.link ?? '#'}
                   key={index}
                   className={cn(
                     'group relative row-span-2 block h-[21.1963rem] overflow-hidden rounded-[1.125rem] sm:w-[21.5938rem]',
@@ -142,7 +142,7 @@ export default function OurProjects({projects}: OurProjectsProps) {
 
             {all_project && all_project?.title_link?.url && (
               <Link
-                href={all_project?.title_link?.url ?? '/'}
+                href={all_project?.title_link?.url ?? '#'}
                 className={cn(
                   'relative col-start-4 row-span-4 block h-[21.1963rem] w-[21.5938rem] overflow-hidden rounded-[1.125rem]',
                 )}

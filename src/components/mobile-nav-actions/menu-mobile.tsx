@@ -107,7 +107,7 @@ export default function MenuMobile({
                   <Link
                     key={index}
                     target='_blank'
-                    href={social?.social_link?.url ?? '/'}
+                    href={social?.social_link?.url ?? '#'}
                     className='inline-flex h-[2.46819rem] w-[2.46819rem] items-center justify-center rounded-full border-[0.823px] border-solid border-[rgba(120,120,120,0.17)]'
                   >
                     <Image
@@ -130,7 +130,7 @@ export default function MenuMobile({
               return (
                 <Link
                   key={index}
-                  href={menuItem?.link?.url ?? '/'}
+                  href={menuItem?.link?.url ?? '#'}
                   target={menuItem?.link?.target ?? '_self'}
                   className='flex h-[2.6875rem] items-center'
                   onClick={(e) => handleClickLinkItem(e)}
@@ -149,7 +149,7 @@ export default function MenuMobile({
           </p>
           {contactLink && contactLink?.url && (
             <Link
-              href={contactLink?.url ?? '/'}
+              href={contactLink?.url ?? '#'}
               target={contactLink?.target ?? '_self'}
               className='relative inline-block'
               onClick={handleClickLinkItem}
