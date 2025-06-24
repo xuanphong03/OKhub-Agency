@@ -93,21 +93,55 @@ export default function PostList({
 
   if (isLoading) {
     return (
-      <div className='grid w-full grid-cols-2 gap-x-[0.8125rem] bg-white'>
-        <div className='col-span-1 max-sm:col-span-full max-sm:mb-[0.6875rem] max-sm:px-[0.75rem]'>
-          <Skeleton className='h-[29.4375rem] w-full rounded-[1.25rem] max-sm:h-[15.5rem]'></Skeleton>
+      <>
+        <div className='grid w-full grid-cols-2 gap-x-[0.8125rem] bg-white'>
+          <div className='col-span-1 max-sm:col-span-full max-sm:mb-[0.6875rem] max-sm:px-[0.75rem]'>
+            <Skeleton className='h-[29.4375rem] w-full rounded-[1.25rem] max-sm:h-[15.5rem]'></Skeleton>
+          </div>
+          <div className='hidden_scroll col-span-1 grid grid-cols-2 gap-x-[0.8125rem] gap-y-[0.6875rem] max-sm:col-span-full max-sm:flex max-sm:gap-0 max-sm:overflow-x-auto'>
+            {[...Array(4)].map((_, index) => {
+              return (
+                <Skeleton
+                  key={index}
+                  className='h-[14.375rem] w-full rounded-[1.25rem] max-sm:h-[11.85rem] max-sm:w-[14.00188rem] max-sm:shrink-0 max-sm:not-first:ml-[1rem] max-sm:first:ml-[0.75rem] max-sm:last:mr-[0.75rem]'
+                ></Skeleton>
+              )
+            })}
+          </div>
         </div>
-        <div className='hidden_scroll col-span-1 grid grid-cols-2 gap-x-[0.8125rem] gap-y-[0.6875rem] max-sm:col-span-full max-sm:flex max-sm:gap-0 max-sm:overflow-x-auto'>
-          {[...Array(4)].map((_, index) => {
-            return (
-              <Skeleton
-                key={index}
-                className='h-[14.375rem] w-full rounded-[1.25rem] max-sm:h-[11.85rem] max-sm:w-[14.00188rem] max-sm:shrink-0 max-sm:not-first:ml-[1rem] max-sm:first:ml-[0.75rem] max-sm:last:mr-[0.75rem]'
-              ></Skeleton>
-            )
-          })}
+        <div className='mt-[1.5rem] flex items-center justify-between px-[0.75rem] sm:hidden'>
+          <div className='flex items-center space-x-[0.44rem]'>
+            <button
+              ref={prevButtonRef}
+              disabled
+              className='flex size-[2rem] shrink-0 items-center justify-center rounded-full bg-[rgba(194,194,194,0.20)] disabled:opacity-25'
+            >
+              <IconArrowRight className='h-[1.11113rem] w-[1.11113rem] shrink-0' />
+            </button>
+            <button
+              ref={nextButtonRef}
+              disabled
+              className='flex size-[2rem] shrink-0 items-center justify-center rounded-full bg-[rgba(194,194,194,0.20)] disabled:opacity-25'
+            >
+              <IconArrowLeft className='h-[1.11113rem] w-[1.11113rem] shrink-0' />
+            </button>
+          </div>
+          {linkMore?.url && (
+            <Link
+              target={linkMore?.target ?? '_self'}
+              href={linkMore?.url}
+            >
+              <CustomBorderedButtonV2
+                color='#1550E5'
+                borderColor='#1550E5'
+                borderLine='rgba(21, 80, 229, 0.10)'
+              >
+                {linkMore?.title}
+              </CustomBorderedButtonV2>
+            </Link>
+          )}
         </div>
-      </div>
+      </>
     )
   }
   if (!Array.isArray(postList) || !postList.length) {
@@ -161,13 +195,13 @@ export default function PostList({
         <div className='flex items-center space-x-[0.44rem]'>
           <button
             ref={prevButtonRef}
-            className='flex size-[2rem] shrink-0 items-center justify-center rounded-full bg-[rgba(194,194,194,0.20)]'
+            className='flex size-[2rem] shrink-0 items-center justify-center rounded-full bg-[rgba(194,194,194,0.20)] disabled:opacity-25'
           >
             <IconArrowRight className='h-[1.11113rem] w-[1.11113rem] shrink-0' />
           </button>
           <button
             ref={nextButtonRef}
-            className='flex size-[2rem] shrink-0 items-center justify-center rounded-full bg-[rgba(194,194,194,0.20)]'
+            className='flex size-[2rem] shrink-0 items-center justify-center rounded-full bg-[rgba(194,194,194,0.20)] disabled:opacity-25'
           >
             <IconArrowLeft className='h-[1.11113rem] w-[1.11113rem] shrink-0' />
           </button>

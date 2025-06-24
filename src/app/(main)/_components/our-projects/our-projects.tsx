@@ -23,13 +23,14 @@ export default function OurProjects({projects}: OurProjectsProps) {
           height={1900}
           className='h-auto w-full max-sm:hidden'
           src='/project/bg-project.webp'
+          loading='eager'
         />
       )}
       {isMobile && (
         <Image
           alt=''
-          width={1600}
-          height={1900}
+          width={345}
+          height={1167.9142}
           className='absolute top-[2.5rem] left-0 h-auto w-full sm:hidden'
           src='/project/bg-project-mb.webp'
         />
