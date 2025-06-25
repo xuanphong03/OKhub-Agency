@@ -241,7 +241,7 @@ const BannerPC = ({bannerSlides}: BannerPCProps) => {
                     </span>
                   </div>
 
-                  <p className='relative z-[1] w-[21.875rem] pl-[0.58rem] text-start text-[1.39438rem] leading-[134%] font-normal text-[#081d1a]'>
+                  <p className='relative z-[1] w-[21.875rem] pl-[0.58rem] text-start text-[1.125rem] leading-[134%] font-normal text-[#081d1a]'>
                     {item.home_banner_des_l}
                   </p>
                 </div>
@@ -307,7 +307,7 @@ const BannerPC = ({bannerSlides}: BannerPCProps) => {
                     ref={(el) => {
                       highlightedTextRefs.current[index] = el
                     }}
-                    className='banner-text relative z-[1] w-[21.875rem] pr-[0.58rem] text-start text-[1.39438rem] leading-[134%] font-normal text-[#081d1a] transition-colors duration-300 ease-in-out'
+                    className='banner-text relative z-[1] w-[21.875rem] pr-[0.58rem] text-start text-[1.125rem] leading-[134%] font-normal text-[#081d1a] transition-colors duration-300 ease-in-out'
                   >
                     {item.home_banner_des_r}
                     {/* {splitTextByLength(item.home_banner_des_r, 35).map(
