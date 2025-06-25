@@ -2,6 +2,7 @@
 
 import ValueCard from '@/app/(main)/_components/value-to-customer/_components/value-card'
 import CustomBorderedButtonV1 from '@/components/bordered-button-v1'
+import useIsMobile from '@/hooks/useIsMobile'
 import {IValueToCustomer} from '@/types/value.interface'
 import clsx from 'clsx'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
@@ -12,6 +13,7 @@ const ValueToCustomer = ({
 }: {
   valueToCustomer: IValueToCustomer
 }) => {
+  const isMobile = useIsMobile()
   const vtcWrapperRef = useRef<HTMLDivElement>(null)
   const vtcHeaderRef = useRef<HTMLDivElement>(null)
   const vtcTitleRef = useRef<HTMLHeadingElement>(null)
@@ -45,9 +47,9 @@ const ValueToCustomer = ({
       })
     }
 
-    const isMobile = window.innerWidth < 640
     // Không dùng ScrollTrigger Pin trên mobile
     if (isMobile) {
+      console.log('Code này được chạy')
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -115,7 +117,7 @@ const ValueToCustomer = ({
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
     }
-  }, []) // Empty dependency array since we only want to run this once on mount
+  }, [isMobile]) // Empty dependency array since we only want to run this once on mount
 
   return (
     <section
