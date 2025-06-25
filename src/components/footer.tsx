@@ -9,6 +9,7 @@ import FooterCredential from './footer/footer-credential'
 import FooterHotline from './footer/footer-hotline'
 import FooterLinks from './footer/footer-links'
 import FooterLogo from './footer/footer-logo'
+import useIsMobile from '@/hooks/useIsMobile'
 
 const Footer = ({
   footer,
@@ -22,7 +23,7 @@ const Footer = ({
   const [hoveredIndex, setHoveredIndex] = useState<number>(0)
   const footerRef = useRef<HTMLElement>(null)
   const overflowRef = useRef<HTMLDivElement>(null)
-
+  const isMobile = useIsMobile()
   // Animation khi scroll đến footer
   useEffect(() => {
     if (!footerRef.current || !overflowRef.current) return
@@ -74,8 +75,8 @@ const Footer = ({
               'https://seohub.okhub-tech.com/wp-content/uploads/2025/04/footer-bg-image-new.png'
             }
             alt={footer?.logo_footer.alt}
-            width={57.5625}
-            height={27.8125}
+            width={isMobile ? 57.5625 : 233.6129}
+            height={isMobile ? 27.8125 : 51.1875}
             className='xsm:hidden h-full w-full object-cover'
           />
         </div>
